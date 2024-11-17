@@ -1,0 +1,10 @@
+---
+releases:
+
+  - name: world1
+    chart: ./world
+    installed: true 
+  
+  - name: world2
+    chart: ./world
+    installed: false

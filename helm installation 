@@ -1,0 +1,61 @@
+Use the url for the documentation to install helm  - https://helm.sh/docs/intro/install/
+
+
+######### for macos ######### 
+brew install helm
+#############################
+
+##### for ubuntu ###########  this is from the hem website ###################
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+sudo apt-get install apt-transport-https --yes
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm
+
+################################### Linux installation ####################
+
+# Step 2 Download Helm using curl 
+curl -fsSL https://get.helm.sh/helm-v3.10.3-linux-amd64.tar.gz -o helm-v3.10.3-linux-amd64.tar.gz
+#############   Replace the version number (v3.10.3) with the latest version available #############   
+Step 2: Extract the Helm Archive 
+tar -zxvf helm-v3.10.3-linux-amd64.tar.gz
+############## This will create a directory called linux-amd64.
+
+Step 3: Install Helm
+
+sudo mv linux-amd64/helm /usr/local/bin/helm
+helm version
+######################################
+#### Using Snap (if available):
+
+sudo snap install helm --classic
+
+################# commands ##############################
+helm create helloworld                    - create a charts with all the deployment files, services, etc. 
+helm install myhelloworld helloworld  ######## helps us to do the deployements 
+helm list -a ######## gives all the deployment versions 
+kubectl get pods ###### gives all pods 
+helm unistall helloworld   ######## helps us to delete the deployments 
+helm upgarde myhelloworld helloworld  ### can updrade the deployemnts or servies anything ############### 
+helm list -a  ### gives all the version of the deployment. So when you do the deployemnt 1st time its revision-1, they you upgrade the 
+##############  yaml files and deploy again its revision-2, so when you check helm list -a you can see all the revisions like 1,2,3,...
+############  in the incremental order is sequentinally only, so be carefull which version you are rolling out #################
+
+helm rollback myhelloworld 1 ### rolls back to the version 
+
+################################## DRY RUN  ##############################################################################
+######## dry run ########   
+
+helm install myhelloworld --debug --dry-run helloworld    
+##### you can the status as pending as it is a dry run no chart will be exexuted. 
+#### Validates with the kubernetes API server and gives an output dry run -- (status - pending install)
+
+################# template  ##########
+helm template helloworld 
+ #### Does not Validates with the kubernetes API server and gives an output dry run locally.
+ ### Renders all the yaml files locally before it is deployed onto production ############
+
+################# lint ###########
+helm lint helloworld 
+###### helps us to check if any erros occures associated with the charts.
+ ####################################################################################################################################
